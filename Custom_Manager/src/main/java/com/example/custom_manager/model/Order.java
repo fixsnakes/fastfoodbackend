@@ -23,17 +23,27 @@ public class Order {
     @Column(name = "order_id")
     private Long order_id;
 
-    private Long customer_id;
     private Date order_date;
     private String order_type;
     private String order_status;
     private float total_amount;
-    private Long voucher_id;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+    @ManyToOne
+    @JoinColumn(name = "voucher_id")
+    private Voucher voucher;
+
+    @Transient
     private String payment_method;
+
+    @Transient
     private String shipping_address;
-    private int deliverypartner_id;
 
-    @OneToMany(mappedBy = "order_id", cascade = CascadeType.ALL)
+    @Transient
+    private Long deliverypartner_id;
+
+    @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
-
 }

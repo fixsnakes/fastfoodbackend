@@ -14,18 +14,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "delivery")
 public class Delivery {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "delivery_id")
     private long delivery_id;
 
-    private long order_id;
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     private String shipping_address;
 
-    private long delivery_partner_id;
-
-
+    @ManyToOne
+    @JoinColumn(name = "delivery_partner_id")
+    private DeliveryPartner deliveryPartner;
 }

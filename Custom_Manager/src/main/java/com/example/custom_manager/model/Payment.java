@@ -16,16 +16,16 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "payment")
 public class Payment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "payment_id")
     private Long payment_id;
 
-    private Long order_id;
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
     private Date payment_date;
     private String payment_method;
     private String status;
-
 }
