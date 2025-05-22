@@ -16,6 +16,11 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
 
+    //findCustomer
+
+    public Optional<Customer> findCustomer(Customer customer ) {
+        return customerRepository.findCustomerByPhone(customer.getPhone());
+    }
 
     //authenticate
     public Customer authenticateUser(String phone, String password) {
@@ -43,8 +48,8 @@ public class CustomerService {
     }
 
     //updatecustomer
-    public boolean updateCustomer(Long id, Customer customerUpdate) {
-        Optional<Customer> customerFind = customerRepository.findById(id);
+    public boolean updateCustomer(Customer customerUpdate) {
+        Optional<Customer> customerFind = customerRepository.findById(customerUpdate.getCustomer_id());
         if (customerFind.isPresent()) {
             Customer customer = customerFind.get();
             customer.setFullname(customerUpdate.getFullname());

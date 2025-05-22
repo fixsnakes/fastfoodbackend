@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -19,7 +20,15 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-
+    //findcustomer
+    @PostMapping("/find")
+    public ResponseEntity<?> findCustomer(@RequestBody Customer customer) {
+        Optional<Customer> customerOptional = customerService.findCustomer(customer);
+        if (customerOptional.isPresent()) {
+            return new ResponseEntity<>(customerOptional.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     //getlistcustomer
     @GetMapping
@@ -45,9 +54,9 @@ public class CustomerController {
     }
 
     //updateCustomer
-    @PutMapping("/{customerid}")
-    public ResponseEntity<?> updateCustomer(@PathVariable Long customerid, @RequestBody Customer customerupdate) {
-        if(customerService.updateCustomer(customerid, customerupdate)) {
+    @PutMapping()
+    public ResponseEntity<?> updateCustomer( @RequestBody Customer customerupdate) {
+        if(customerService.updateCustomer(customerupdate)) {
             return  ResponseEntity.status(HttpStatus.OK).body("Update Customer Success");
         }
         else{

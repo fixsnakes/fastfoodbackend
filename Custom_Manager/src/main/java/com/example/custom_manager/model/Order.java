@@ -22,7 +22,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long order_id;
-
     private Date order_date;
     private String order_type;
     private String order_status;
@@ -34,15 +33,13 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "voucher_id")
     private Voucher voucher;
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @Transient
     private String payment_method;
 
-    @Transient
-    private String shipping_address;
-
-    @Transient
-    private Long deliverypartner_id;
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;

@@ -47,24 +47,14 @@ public class OrderService {
             orderDetailRepository.save(detail);
         }
 
-
         //save payment
         Payment payment = new Payment();
         payment.setOrder(savedOrder);
         payment.setPayment_date(savedOrder.getOrder_date());
         payment.setPayment_method(savedOrder.getPayment_method());
-        payment.setStatus("PENDING");
+        payment.setStatus("SUCCESS");
         paymentRepository.save(payment);
 
-        //save delivery
-        Delivery delivery = new Delivery();
-        delivery.setOrder(savedOrder);
-        delivery.setShipping_address(savedOrder.getShipping_address());
-        Optional<DeliveryPartner> deliveryPartner = deliveryPartnerRepository.findById(savedOrder.getDeliverypartner_id());
-        if (deliveryPartner.isPresent()) {
-            delivery.setDeliveryPartner(deliveryPartner.get());
-            deliveryRepository.save(delivery);
-        }
 
         return savedOrder;
     }
