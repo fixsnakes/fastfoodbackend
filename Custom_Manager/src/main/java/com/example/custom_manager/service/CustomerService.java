@@ -22,19 +22,6 @@ public class CustomerService {
         return customerRepository.findCustomerByPhone(customer.getPhone());
     }
 
-    //authenticate
-    public Customer authenticateUser(String phone, String password) {
-        Optional<Customer> customerfind = customerRepository.findCustomerByPhone(phone);
-        if (customerfind.isPresent()) {
-            if (customerfind.get().getPassword().equals(password)) {
-                return customerfind.get();
-            }
-        }
-
-        return null;
-    }
-
-
 
     //getlisthCustommer
     public List<Customer> getlistCustomer() {
@@ -45,6 +32,21 @@ public class CustomerService {
     public boolean addCustomer(Customer customerAdd) {
         customerRepository.save(customerAdd);
         return true;
+    }
+
+
+
+
+    //authenticate
+    public Customer authenticateUser(String phone, String password) {
+        Optional<Customer> customerfind = customerRepository.findCustomerByPhone(phone);
+        if (customerfind.isPresent()) {
+            if (customerfind.get().getPassword().equals(password)) {
+                return customerfind.get();
+            }
+        }
+
+        return null;
     }
 
     //updatecustomer
